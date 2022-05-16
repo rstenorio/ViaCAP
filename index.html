@@ -36,7 +36,7 @@
                 type="text"
                 placeholder="CEP"
               />
-              <div class="error-msg">Campo Requerido</div>
+              <div class="error-msg" data-error="cep"></div>
             </div>
 
             <div class="form-control">
@@ -60,7 +60,7 @@
                 type="text"
                 placeholder="Numero"
               />
-              <div class="error-msg">Campo Requerido</div>
+              <div class="error-msg" data-error="number"></div>
             </div>
 
             <div class="form-control">
@@ -76,8 +76,8 @@
             </div>
 
             <div class="btn-container">
-              <button class="btn btn-left" type="submit">Salvar</button>
-              <button class="btn btn-right">Limpar</button>
+              <button name="btnSave" class="btn btn-left" type="submit">Salvar</button>
+              <button name="btnClear" class="btn btn-right">Limpar</button>
             </div>
           </form>
         </div>
@@ -99,5 +99,7 @@
 
     </section>
     </main>
+
+    <script type="module" src="js/dsviacap.js"></script>
   </body>
 </html>
