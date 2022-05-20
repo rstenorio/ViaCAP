@@ -1,4 +1,5 @@
 import Address from "../models/address.js";
+import * as addressService from '../services/address-service.js';
 
 //funcao construtora
 function State() {
@@ -33,7 +34,69 @@ export function init() {
   state.errorNumber = document.querySelector('[data-error="number"]');
 
   state.inputNumber.addEventListener('change',handleInpuNumberChange);
+  state.inputNumber.addEventListener('keyup',handleInpuNumberKeyup);
+
+  state.inputCep.addEventListener('change', handleInpuCepChange);
+
+
+  state.btnClear.addEventListener('click', handleBtnClearClick);  
+  state.btnSave.addEventListener('click', handleBtnSaveClick);
+
 }
+
+function handleInpuNumberKeyup(e){
+    state.address.number = e.target.value;
+}
+
+async function handleInpuCepChange(e){
+    const cep = e.target.value;
+
+    try {
+        const address = await addressService.findByCep(cep);
+
+        state.inputStreet.value = address.street;
+        state.inputCity.value = address.city;
+        state.address = address;
+    
+        setFormError("cep","");
+        state.inputNumber.focus();
+            
+    } catch (error) {
+        state.inputStreet.value = "";
+        state.inputCity.value = "";
+        
+        setFormError("cep","Informe um cep valido!!");
+
+    }
+
+}
+
+
+async function handleBtnSaveClick(e){
+    e.preventDefault();
+    console.log(state.address);
+}
+
+function handleBtnClearClick(event) {
+    event.preventDefault();
+    clearForm();
+}
+
+function clearForm() {
+    state.inputCep.value = "";
+    state.inputCity.value = "";
+    state.inputNumber.value = "";
+    state.inputStreet.value = "";
+
+    setFormError("cep", "");
+    setFormError("number", "");
+
+    state.address = new Address();
+
+    state.inputCep.focus();
+}
+
+
 
 function handleInpuNumberChange(e) {
   if (e.target.value == "") {
